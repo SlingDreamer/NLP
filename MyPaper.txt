@@ -1,0 +1,13 @@
+1 example:明智
+  Word embedding, which is also termed distributed word representation, has been an important foundation in the field of Natural Language Processing (NLP).
+It encodes the semantic meanings of a word into a real-valued low-dimensional vector,which perform better in many tasks such as text classification, machine translation ..... (and so on) over traditional one-hot representations.
+Among many word vector models,Continuous Bag-of-Word (CBOW), Skip-gram (Mikolov et al.,2013a), Global Vectors (GloVe) (Penningtonet al., 2014) is popular because of their simplicity and efficiency.
+(分布式假说)
+However, these models only focus on word level information, and do not pay attention to the fine-grained morphological information inside the words,such as componets of Chinese character or English
+morphemes.
+  Different from English,Chinese characters are glyphs whose components may depict objects or represent abstract notions.Usually a character consists of more commonly two or more components which have meanings close to the character, using a variety of different principles[wiki written chinese]
+Chinese words contain Chinese characters and subcharacter compoents,including rich semantic information.
+However, the subcharacter compoents of a character contain a lot of unwanted noise information, so we integrate the word components into main-component.
+Chinese characters contain elements and radicals，Just as Chinese contains Chinese characters.
+The components of characters can be roughly divided into two types: main-component and radical.The main-component which consists of several components indicates the baisc meaning of a character while the radical indicates some attribute meanings of a character.
+For example,矢 and 口 and are the components of charactor 智，知 is the 
