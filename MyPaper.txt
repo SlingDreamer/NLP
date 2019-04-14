@@ -1,13 +1,22 @@
-1 example:����
+ 1.example:明智
   Word embedding, which is also termed distributed word representation, has been an important foundation in the field of Natural Language Processing (NLP).
 It encodes the semantic meanings of a word into a real-valued low-dimensional vector,which perform better in many tasks such as text classification, machine translation ..... (and so on) over traditional one-hot representations.
 Among many word vector models,Continuous Bag-of-Word (CBOW), Skip-gram (Mikolov et al.,2013a), Global Vectors (GloVe) (Penningtonet al., 2014) is popular because of their simplicity and efficiency.
-(�ֲ�ʽ��˵)
+(分布式假说)
 However, these models only focus on word level information, and do not pay attention to the fine-grained morphological information inside the words,such as componets of Chinese character or English
 morphemes.
   Different from English,Chinese characters are glyphs whose components may depict objects or represent abstract notions.Usually a character consists of more commonly two or more components which have meanings close to the character, using a variety of different principles[wiki written chinese]
 Chinese words contain Chinese characters and subcharacter compoents,including rich semantic information.
 However, the subcharacter compoents of a character contain a lot of unwanted noise information, so we integrate the word components into main-component.
-Chinese characters contain elements and radicals��Just as Chinese contains Chinese characters.
+Chinese characters contain elements and radicals，Just as Chinese contains Chinese characters.
 The components of characters can be roughly divided into two types: main-component and radical.The main-component which consists of several components indicates the baisc meaning of a character while the radical indicates some attribute meanings of a character.
-For example,ʸ and �� and are the components of charactor �ǣ�֪ is the 
+For example,"智 (intelligence)” is reduced into the components “矢 (arrow)”, “口 (mouth)” and “日 (sun)”,and 矢 and 口 and are the components and 日 is the radical of charactor 智.All these components may not be relevant to the semantics of the character.However, the main-component "知(wisdom)" consisting of several small components is closely related to the meaning of the charactor. Based on this, we have proposed .....
+
+3.Experiments
+In this section,we test the performance of our model in generating high-quality word embeddings on word similarity evaluation and word analogy tasks.
+
+3.1 Experimental Settings
+
+Traing Corpus : We utilize a medium-sized Chinese corpus to train all word embedding models.We adopt the Chinese Wikipedia Dump as our training corpus whose size is about 7GB.
+We use a script named WikiExtractor to convert data from XML into text format.What's more,We use THULAC 3 (Sun et al.,2016b) for Chinese word segmentation and normalize all characters as simplified Chinese.
+In pre-processing,we filter all digits,punctuation masks and non Chinese characters.
