@@ -1,4 +1,4 @@
- 1.example:明智
+1.example:明智
   Word embedding, which is also termed distributed word representation, has been an important foundation in the field of Natural Language Processing (NLP).
 It encodes the semantic meanings of a word into a real-valued low-dimensional vector,which perform better in many tasks such as text classification, machine translation ..... (and so on) over traditional one-hot representations.
 Among many word vector models,Continuous Bag-of-Word (CBOW), Skip-gram (Mikolov et al.,2013a), Global Vectors (GloVe) (Penningtonet al., 2014) is popular because of their simplicity and efficiency.
@@ -10,13 +10,43 @@ Chinese words contain Chinese characters and subcharacter compoents,including ri
 However, the subcharacter compoents of a character contain a lot of unwanted noise information, so we integrate the word components into main-component.
 Chinese characters contain elements and radicals，Just as Chinese contains Chinese characters.
 The components of characters can be roughly divided into two types: main-component and radical.The main-component which consists of several components indicates the baisc meaning of a character while the radical indicates some attribute meanings of a character.
-For example,"智 (intelligence)” is reduced into the components “矢 (arrow)”, “口 (mouth)” and “日 (sun)”,and 矢 and 口 and are the components and 日 is the radical of charactor 智.All these components may not be relevant to the semantics of the character.However, the main-component "知(wisdom)" consisting of several small components is closely related to the meaning of the charactor. Based on this, we have proposed .....
+For example,"智 (intelligence)” is reduced into the components “矢(arrow)”, “口(mouth)” and “日(sun)”,and 矢(arrow) and 口(mouth) and are the components and 日(sun) is the radical of charactor 智.All these components may not be relevant to the semantics of the character.However, the main-component "知(wisdom)" consisting of several small components is closely related to the meaning of the charactor. Based on this, we have proposed .....
 
 3.Experiments
 In this section,we test the performance of our model in generating high-quality word embeddings on word similarity evaluation and word analogy tasks.
 
 3.1 Experimental Settings
 
-Traing Corpus : We utilize a medium-sized Chinese corpus to train all word embedding models.We adopt the Chinese Wikipedia Dump as our training corpus whose size is about 7GB.
+Traing Corpus : 
+We utilize a medium-sized Chinese corpus to train all word embedding models.We adopt the Chinese Wikipedia Dump as our training corpus whose size is about 7GB.
 We use a script named WikiExtractor to convert data from XML into text format.What's more,We use THULAC 3 (Sun et al.,2016b) for Chinese word segmentation and normalize all characters as simplified Chinese.
 In pre-processing,we filter all digits,punctuation masks and non Chinese characters.
+Finally, we obtained a training corpus of approximately 2g in size, containing 2123123 words, and 213 unique words.
+
+Word Map:
+The Modern Chinese Word List is divided into two parts: 2500 common characters and 1000 secondary common characters,and the coverage of those words in most corpora reached 99.48% which means mastering the common and secondary words has reached the basic requirements for using Chinese.
+Hence,we use crawler script to obtain the main-components and radicals information of those Chinese characters which is a total of 3500 from HTTPCN. We obtained 3433 main-components and 57 radicals.
+//we obtained 20,879 characters, 13,253 components and 218 radicals,of which 7,744 characters have more than one components, and 214 characters are equal to their radicals.
+To create the word map,we need to obtain the explanatory meaning of the main-components of each characters.
+Although the main-components are part of the characters, they are themselves characters.
+Therefore, we have crawled the Chinese interpretation of 3433 main-component characters from HTTPCN and obtained the core latent meanings using manual annotation.
+Similarly, we obtained the core latent meaning of 57 radicals from XXX.
+Although this process costs manpower and time, it can be done once and for all for each languag because it has the same knowledge base.
+When we choose a Chinese charactor,its main-component and radical will be selected and further replaced by their latent meanings.
+
+Parameter Settings:
+For the sake of fairness, we used the same parameter settings for all models.
+
+For all models, we used the same parameter settings.
+We fixed the word vector dimension to be 200, the window size to be 5, the training iteration to be 100, the initial learning rate to be 0.025, and the subsampling parameter to be 10􀀀4. Words with
+frequency less than 5 were ignored during training. We used 10-word negative sampling for optimization.
+
+
+
+
+
+
+
+
+
+
