@@ -21,6 +21,7 @@ Traing Corpus :
 We utilize a medium-sized Chinese corpus to train all word embedding models.We adopt the Chinese Wikipedia Dump as our training corpus whose size is about 7GB.
 We use a script named WikiExtractor to convert data from XML into text format.What's more,We use THULAC 3 (Sun et al.,2016b) for Chinese word segmentation and normalize all characters as simplified Chinese.
 In pre-processing,we filter all digits,punctuation masks and non Chinese characters.
+To get better quality of the word embeddings, we removed the stop words (that are common_ which from *********) in the corpus.
 Finally, we obtained a training corpus of approximately 2g in size, containing 2123123 words, and 213 unique words.
 
 Word Map:
@@ -34,13 +35,35 @@ Similarly, we obtained the core latent meaning of 57 radicals from XXX.
 Although this process costs manpower and time, it can be done once and for all for each languag because it has the same knowledge base.
 When we choose a Chinese charactor,its main-component and radical will be selected and further replaced by their latent meanings.
 
-Parameter Settings:
-For the sake of fairness, we used the same parameter settings for all models.
+(为了更快的训练速度 我们的模型采用了CBOW作为基础)
 
-For all models, we used the same parameter settings.
-We fixed the word vector dimension to be 200, the window size to be 5, the training iteration to be 100, the initial learning rate to be 0.025, and the subsampling parameter to be 10􀀀4. Words with
+Parameter Settings:
+(-cbow 1 -size 200 -window 5 -negative 10 -hs 0 -sample 1e-4 -threads 25 -binary 0 -iter 15 -alpha 0.025)
+For the sake of fairness, we used the same parameter settings for all models.
+In order to speed up the training process, we have adopted negative sampling techniques for both Cbow and skip-gram and our models.
+
+We set the word vector dimension as 200, the window size as 5, the training iteration as 100, the initial learning rate as 0.025, and the subsampling parameter to be 1e-4. Words with
 frequency less than 5 were ignored during training. We used 10-word negative sampling for optimization.
 
+4.Evaluation Benchmarks
+4.4.1 Word Similarity
+
+This experiment is used to evaluate the semantic relevance of generated word embeddings in word pairs.
+
+For Chinese word similarity, we employ two differnet manually-annotated datasets,wordsim-240 and wordsim-296 provided by (Chen et al., 2015).
+These datasets are composed of word pairs and are manually labeled with the similarity scores for each word pair.
+We utilize the cosine similarity to measure the similarity of each word pair, and the Spearman’s rank correlation coefficient (p) is employed to evaluate our calculation results and human scores.
+More details of these datasets are shown in Table 1.
+
+
+4.4.2 Syntactic Analogy
+
+This task is to measure the quality of word embeddings by examining the semantic inference ability between word embeddings.
+This
+task examines the ability to deduce the semantic relations
+between different words with the learned word embeddings.
+
+A word analogy compares the relationship between two pairs of words
 
 
 
