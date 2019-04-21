@@ -1,3 +1,12 @@
+Abstract  
+We propose MCWE,a novel method for learning Chinese word embeddings.
+Most Chinese word embeddings takes a word as the basic unit, or directly use the internal structure of words.
+However,these models still ignore the rich implicit information inside Chinese.
+In this paper,we explore to employ the latent meanings of the main components of the Chinese characters to train and enhance the word embeddings.
+Based on this purpose,we propose a main-component enhanced word embedding model(MCWE),
+which incorporate the latent meanings of the main-components during the training process.Experiments on word similarity, syntactic analogy and text classification are conducted to validate the feasibility of our model.
+Evaluation on both word similarity and word analogy tasks demonstrates the superior performance of our model.
+
 1.example:明智
   Word embedding, which is also termed distributed word representation, has been an important foundation in the field of Natural Language Processing (NLP).
 It encodes the semantic meanings of a word into a real-valued low-dimensional vector,which perform better in many tasks such as text classification, machine translation ..... (and so on) over traditional one-hot representations.
