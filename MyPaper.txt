@@ -20,7 +20,47 @@ However, the subcharacter compoents of a character contain a lot of unwanted noi
 Chinese characters contain elements and radicals，Just as Chinese contains Chinese characters.
 The components of characters can be roughly divided into two types: main-component and radical.The main-component which consists of several components indicates the baisc meaning of a character while the radical indicates some attribute meanings of a character.
 For example,"智 (intelligence)” is reduced into the components “矢(arrow)”, “口(mouth)” and “日(sun)”,and 矢(arrow) and 口(mouth) and are the components and 日(sun) is the radical of charactor 智.All these components may not be relevant to the semantics of the character.However, the main-component "知(wisdom)" consisting of several small components is closely related to the meaning of the charactor. Based on this, we have proposed .....
+*******************************
+Monday
+In this work, we present a model to jointly learn the embeddings of Chinese words, characters,and subcharacter components.
+(huang er al. Learning Chinese Word Representations From Glyphs Of Characters)proposed the GWE model to enhance the representation of words with character glyphs.
+(Yu et al.Joint Embeddings of Chinese Words, Characters, and Fine-grained Subcharacter Components) used Chinese characters and subcharacter components to improve Chinese word embeddings 
+and proposed the JWE model to jointly learn Chinese word and character embeddings.
+(Cao et al. cw2vec: Learning Chinese Word Embeddings with Stroke n-gram Information)proposed a cw2vec model, which exploits stroke-level information to improve the learning of Chinese word embeddings.
 
+2.My model(map表需要精确的标注隐含词义,对模型影响很大)
+In this section, we introduce our Main-Component Word Embedding models(MCWEs),named Main-Component Word Embedding-Average(MCWE-Avg),MCWE-Soft Attention(MCWE-SA),MCWE-Hard Attention(MCWE-HA),
+which is based on CBOW model(Mikolov et al., 2013a).
+It should be noted that our models directly uses the internal meanings of the Chinese characters,rather than directly using the characters or componets of the word themselves.
+MCWE-Avg assumes that all the latent meanings of the Chinese character's main-component to have the same weight.
+However, most of the main-components are also a frequently-used Chinese word which may contain some ambiguous information.
+To address this concern,we proposed the MCWE-SA which which based on the soft attention scheme.
+The MCWE-SA assumes that the latent meanings of main-components have their own weights,and assign higher weights to the meanings closely related to the target character,
+so that they have greater impact on the word embeddings.
+What's more,MCWE-HA which based on the hard attention scheme only focuses on the latent meaning of the main-component with the highest similarity to the target word.
+In what follows, we will introduce each of our MCWEs in detail.
+At the end of this section, we are going to introduce the update rules of the models.
+
+MCWE-Avg:
+
+We denote the Chinese character set as C and the Chinese word vocabulary as W. Each character ci-C is represented by vector ci, 
+and each word wi-W is represented by vector wi.
+
+We denote D as the training corpus, W =(w1;w2;.....;wN) as the vocabulary of words,C = (c1; c2;.... ; cM) as the vocabulary of characters. 
+
+The item for wi in the word map is wi -- Mi. Mi is a set of latent meanings of wi's main-components, 
+(Particularly,we treat the radical as a main-component and add the latent meaning of the radical to the main-component latent meaning.)
+Formally, a context word wj is represented as
+公式见本子
+
+
+MCWE-SA：
+
+Through observation, we found that most Chinese words have more than one latent meaning with their main-component,
+but some implicit meanings have low correlation with target words(the corresponding word).For example,........见图
+
+
+*******************************
 3.Experiments
 In this section,we test the performance of our model in generating high-quality word embeddings on word similarity evaluation and word analogy tasks.
 
