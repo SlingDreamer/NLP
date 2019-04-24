@@ -37,7 +37,7 @@ For example,"智 (intelligence)” is reduced into the components “矢(arrow)�
 and proposed three efficient models called MCEW-Avg, MCWE-Sim, and MCWE-Max.
 Through our model, the rich implicit information in Chinese is fully utilized and the similarities between words and words is improved.
 //Using our model, we can strengthen the similarity between words and words more effectively.
-（贡献）1.构建汉语主成分map表；2.attention机制引用
+（贡献）1.构建汉语主成分map表；2.attention机制引用 3.有很强的拓展性（CWE）
 
 *******************************
 Monday
@@ -76,7 +76,15 @@ Formally, a context word wj is represented as
 MCWE-SA：
 
 Through observation, we found that most Chinese words have more than one latent meaning with their main-component,
-but some implicit meanings have low correlation with target words(the corresponding word).For example,........见图
+but some latent meanings have low correlation with target words(the corresponding word).For example,........见图
+
+
+MCWE-HA:
+//In order to further reduce the problem that the main component implies the opposite of the similarity of Chinese characters, we propose MCWE-HA.
+In order to further reduce the impact of irrelevant latent meanings to the word, we propose MCWE-HA which is based on the idea of hard attention model.
+We choose the latent meaning which have the greatest similarity to the Chinese word.
+According to experimental experience, we only retain the implicit meaning of similarity greater than 0.5.
+
 
 
 *******************************
@@ -126,9 +134,71 @@ More details of these datasets are shown in Table 1.
 
 4.4.2 Syntactic Analogy
 
-This task is to measure the quality of word embeddings by examining the semantic inference ability between word embeddings.
-This
-task examines the ability to deduce the semantic relations
-between different words with the learned word embeddings.
+This task examines the quality of word embeddings by discovering the semantic inferential capability between pairs of words.
+The core task of syntactic analogy is to answer the questions like "雅典(Athens) is to 希腊(Greece) as 东京(Tokyo) is to 日本(Japan)" where 日本(Japan) is the answer we hope to get.
+This means that the model get the answer correctly if the similarity of "vector(希腊) - vector(雅典) + vector(东京)" and vector(日本) is the largest among all words.
 
-A word analogy compares the relationship between two pairs of words
+（we use the Chinese word analogy dataset introduced by (Chen et al., 2015), the dataset is divided into adjectives, nouns and verbs.
+which consists of 1,124 tuples of words and each tuple contains
+4 words, coming from three different categories:“Capital” (677 tuples), “State” (175 tuples), and“Family” (272 tuples). Our training corpus covers
+all the testing words.）出自jwe
+
+It contains 3 analogy types: (1) capitals of countries (687 groups); (2) states/provinces of cities (175 groups); and (3) family words (240 groups). The learning corpus covers
+more than 97% of all the testing words
+
+The dataset contains 3 groups of
+analogy problems: capitals of countries, (China)
+states/provinces of cities, and family relations.
+////A word analogy compares the relationship between two pairs of words
+
+
+
+4.3Case Study
+
+
+
+
+5 The Impacts of Parameter Settings
+
+The parameter settings can affect the performance of word embeddings.
+We take a task to investigate the impact of corpus size for word embeddings.
+In the analysis of corpus size, we set the same hyperparameters as before.
+We select the Wordsim-353 as the evaluation standard of word similarity.
+The entire corpus previously mentioned are divided into 1/5,2/5,3/5,4/5 and 5/5 respectively as our new corpus for the task.
+As shown in Fig. 4,
+
+
+
+6 Conclusion and Future Work
+In this paper,we explored a new direction of using the latent meanings of Chinese internal components instead of themselves to enhance the Chinese word embeddings.
+We propose three models named MCWE-Avg,MCWE-SA and MCWE-HA which make full use of subword information.
+The attention model is used to dynamically adjust the weights of latent meanings for the main-components of Chinese characters in MCWE-SA and MCWE-HA.
+
+
+//we introduce latent meanings of Chinese character's main-compoent into word embedding methods to enhance Chinese word embeddings.
+
+
+
+
+Acknowledgments
+The authors are grateful to the reviewers for constructive feedback.
+We would like to thank the anonymous reviewers for their insightful comments and suggestions.
+
+
+References
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
