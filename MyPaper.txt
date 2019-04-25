@@ -76,14 +76,27 @@ Formally, a context word wj is represented as
 MCWE-SA：
 
 Through observation, we found that most Chinese words have more than one latent meaning with their main-component,
-but some latent meanings have low correlation with target words(the corresponding word).For example,........见图
+but some latent meanings have low correlation with target words(the corresponding word).For example,main-component "知(knowledge)" means "" 、"" and "".
+As Fig.3 shows,for the item "智慧(intelligence)" ——{[],[],[],[],[],[],[],[]} in the word map,each latent meaning has a bias on the word "智慧(intelligence)".
+Therefore, we assign different weights to each latent meaning based on the idea of soft attention model.
+We measure the weights of latent meanings by calculating the cosine similarity between the corresponding latent meanings and the target word where cosine similarity is usually used to measure the similarity between word embeddings.
+Furthermore,we remove the negatively correlated latent meaning.
+Hence, at the input layer, the modified embedding of xi can be expressed as
+
+公式见本
+Let Sim(·) denotes the function to calculate the similarity between meanings of Chinese words and characters, we use cosine distance as the distance metric.
+The i-th latent meaning of the main-component of Chinese character c are ci.
 
 
 MCWE-HA:
 //In order to further reduce the problem that the main component implies the opposite of the similarity of Chinese characters, we propose MCWE-HA.
 In order to further reduce the impact of irrelevant latent meanings to the word, we propose MCWE-HA which is based on the idea of hard attention model.
-We choose the latent meaning which have the greatest similarity to the Chinese word.
-According to experimental experience, we only retain the implicit meaning of similarity greater than 0.5.
+We only choose the latent meaning which have the greatest similarity to the Chinese word.
+According to experimental experience, we only retain the latent meaning of similarity with token xi greater than 0.5.
+And MCWE-HA is mathematically defined as
+公式（3）
+
+where we only keep values with cos（Vxi,Vm） greater than 0.5 for comparison. 
 
 
 
@@ -154,6 +167,8 @@ states/provinces of cities, and family relations.
 
 
 4.3Case Study
+In addition to the above quantitative analysis, we also conducted a qualitative analysis of the impact of implied meanings.
+
 
 
 
