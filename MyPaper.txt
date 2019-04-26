@@ -1,32 +1,40 @@
 Abstract  
-We propose MCWE,a novel method for learning Chinese word embeddings.
-Most Chinese word embeddings takes a word as the basic unit, or directly use the internal structure of words.
-However,these models still ignore the rich implicit information inside Chinese.
-In this paper,we explore to employ the latent meanings of the main components of the Chinese characters to train and enhance the word embeddings.
-Based on this purpose,we propose three main-component enhanced word embedding models(MCWEs),named MCWE-Avg,MCWE-Sim,MCWE-Max respectively,
-which incorporate the latent meanings of the main-components during the training process.Experiments on word similarity, syntactic analogy and text classification are conducted to validate the feasibility of our model.
-Evaluation on both word similarity and word analogy tasks demonstrates the superior performance of our model.
+//We propose MCWE,a novel method for learning Chinese word embeddings.
+Word embeddings have a great impact on natural language processing.
+In morpheme writing systems,most Chinese word embeddings takes a word as the basic unit, or directly use the internal structure of words.
+However,these models still neglect the rich latent meanings in the internal structure of Chinese characters.
+In this paper,we explore to employ the latent meanings of the main-components of the Chinese characters to train and enhance the Chinese word embeddings.
+Based on this purpose,we propose three main-component enhanced word embedding models(MCWEs),named MCWE-Avg,MCWE-SA,MCWE-HA respectively,
+which incorporate the latent meanings of the main-components during the training process.
+Experiments on word similarity, syntactic analogy and text classification are conducted to validate the feasibility of our models.
+Evaluations on both word similarity and word analogy tasks demonstrate the superior performance of our models.
 
 1.Introduction
   Word embedding, which is also termed distributed word representation, has been an important foundation in the field of Natural Language Processing (NLP).
-It encodes the semantic meanings of a word into a real-valued low-dimensional vector,which perform better in many tasks such as text classification, machine translation ..... (and so on) over traditional one-hot representations.
-Among many word vector models,Continuous Bag-of-Word (CBOW), Skip-gram (Mikolov et al.,2013a), Global Vectors (GloVe) (Penningtonet al., 2014) is popular because of their simplicity and efficiency.
+It encodes the semantic meaning of a word into a real-valued low-dimensional vector,which performs better in many tasks such as text classification, machine translation ..... (and so on) over traditional one-hot representations.
+Among many word embedding models,Continuous Bag-of-Word (CBOW), Skip-gram (Mikolov et al.,2013a), Global Vectors (GloVe) (Penningtonet al., 2014) is popular because of their simplicity and efficiency.
 (分布式假说)(morphemes/characters)
-However, these models only focus on word level information, and do not pay attention to the fine-grained morphological information inside the words,such as componets of Chinese character or English
+However, these models only focus on word level information, and do not pay attention to the fine-grained morphological information inside the words or the characters,such as componets of Chinese character or English
 morphemes.
-
-    Different from English,Chinese characters are glyphs whose components may depict objects or represent abstract notions.Usually a character consists of more commonly two or more components 
-which have meanings close to the character, using a variety of different principles[wiki written chinese]
-Chinese words contain Chinese characters and subcharacter compoents,including rich semantic information.
+    Different from English words,Chinese characters are glyphs whose components may depict objects or represent abstract notions.Usually a character consists of more commonly two or more components 
+which have meanings close to the character, using a variety of different principles[wiki written chinese https://en.wikipedia.org/wiki/Written_Chinese]
+That means Chinese words themselves are often composed of Chinese characters and subcharacter compoents,including rich semantic information.
     (引用论文)（过去式）
   
   Previous researchers have done some works by using the rich information inside Chinese for word embeddings enhancement with internal morphological semantics.
    (Li et al.  Component-Enhanced Chinese Character Embeddings) used the radicals to enhance the Chinese character embeddings.
-   For a more fine-grained combination of Chinese character and radical,
-   (Yin et al.Multi-Granularity Chinese Word Embedding)proposed methods to enhance Chinese character embeddings based on CWE model.
-   (Chen et al. Joint Learning of Character and Word Embeddings) enhance the quality of Chinese word embeddings by exploit character level information.
+(Chen et al. Joint Learning of Character and Word Embeddings) proposed the CWE model to improve the quality of Chinese word embeddings by exploit character level information.   
+For a more fine-grained combination of Chinese character and radical,(Yin et al.Multi-Granularity Chinese Word Embedding)proposed methods to enhance Chinese character embeddings based on CWE model.
    (Jian et al.Improve Chinese Word Embeddings by Exploiting Internal Structure) used external language to calculate the similarity between Chinese words and characters to enhance semantic information
   based on the rich internal structure of Chinese words
+(Monday4.22)
+//In this work, we present a model to jointly learn the embeddings of Chinese words, characters,and subcharacter components.
+
+(huang er al. Learning Chinese Word Representations From Glyphs Of Characters)proposed the GWE model,a pixel-based model that learns character features from font images to enhance the representation (of words with character glyphs).
+(Yu et al.Joint Embeddings of Chinese Words, Characters, and Fine-grained Subcharacter Components) used Chinese characters and subcharacter components to improve Chinese word embeddings 
+and proposed the JWE model to jointly learn Chinese word and character embeddings.
+(Cao et al. cw2vec: Learning Chinese Word Embeddings with Stroke n-gram Information)proposed a cw2vec model, which exploits stroke-level information to improve the learning of Chinese word embeddings.
+
 
    However, the subcharacter compoents of a character contain a lot of unwanted noise information, so we integrate the word components into main-component.
 Chinese characters contain elements and radicals，Just as Chinese contains Chinese characters.
@@ -34,18 +42,25 @@ The components of characters can be roughly divided into two types: main-compone
 For example,"智 (intelligence)” is reduced into the components “矢(arrow)”, “口(mouth)” and “日(sun)”,and 矢(arrow) and 口(mouth) and are the components and 日(sun) is the radical of charactor 智.All these components may not be relevant to the semantics of the character.However, the main-component "知(wisdom)" consisting of several small components is closely related to the meaning of the charactor. Based on this, we have proposed .....
 
     In this paper, we have modified the CBOW model in the word2vec source code, introduced the information of the latent meaning of the Chinese main-component and radical, 
-and proposed three efficient models called MCEW-Avg, MCWE-Sim, and MCWE-Max.
+and proposed three efficient models called MCEW-Avg, MCWE-SA, and MCWE-HA.
+   The learned Chinese word embeddings not only encode morphological properties into Chinese words, but also have a higher similarity to the synonym.
+   Our model directly modifies embeddings of the target words, without generating and training extra embeddings for latent meanings.
+In addition,we create a word map to describe the relationship between Chinese words and the latent meanings of their main-components and radicals.
+
+
 Through our model, the rich implicit information in Chinese is fully utilized and the similarities between words and words is improved.
 //Using our model, we can strengthen the similarity between words and words more effectively.
 （贡献）1.构建汉语主成分map表；2.attention机制引用 3.有很强的拓展性（CWE）
+Our contributions of this paper can be summarized as follows:
+
+1.Rather than directly leverage the components of the word itself, we provide a method to use the latent meanings of the main-components and radicals to train the word embedding.
+In order to verify the feasibility of our purpose,two models,named MCEW-SA and MCWE-HA,are proposed to incorporate the latent meanings.
+
+2.We propose a method to assign the weights of latent meanings at input layer based on the attention scheme.
+Through the attention mechanism, we focus on the latent meanings of higher contribution to the target word and assign them higher weights.
 
 *******************************
-Monday
-In this work, we present a model to jointly learn the embeddings of Chinese words, characters,and subcharacter components.
-(huang er al. Learning Chinese Word Representations From Glyphs Of Characters)proposed the GWE model to enhance the representation of words with character glyphs.
-(Yu et al.Joint Embeddings of Chinese Words, Characters, and Fine-grained Subcharacter Components) used Chinese characters and subcharacter components to improve Chinese word embeddings 
-and proposed the JWE model to jointly learn Chinese word and character embeddings.
-(Cao et al. cw2vec: Learning Chinese Word Embeddings with Stroke n-gram Information)proposed a cw2vec model, which exploits stroke-level information to improve the learning of Chinese word embeddings.
+
 
 2.My model(map表需要精确的标注隐含词义,对模型影响很大)
 In this section, we introduce our Main-Component Word Embedding models(MCWEs),named Main-Component Word Embedding-Average(MCWE-Avg),MCWE-Soft Attention(MCWE-SA),MCWE-Hard Attention(MCWE-HA),
